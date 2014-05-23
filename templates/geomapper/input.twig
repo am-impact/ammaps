@@ -1,0 +1,48 @@
+{% import "_includes/forms" as forms %}
+
+<div class="geo-mapper-field" id="{{ handle }}">
+    <div class="geo-mapper-address">
+        {{ forms.textField({
+            placeholder: 'Address' |t,
+            id: handle ~ '-address',
+            name: handle ~ '[address]',
+            value: address,
+        }) }}
+    </div>
+    <div class="geo-mapper-location">
+        {{ forms.textField({
+            placeholder: 'Zip' |t,
+            id: handle ~ '-zip',
+            name: handle ~ '[zip]',
+            value: zip,
+        }) }}
+        {{ forms.textField({
+            placeholder: 'City' |t,
+            id: handle ~ '-city',
+            name: handle ~ '[city]',
+            value: city,
+        }) }}
+        {{ forms.textField({
+            placeholder: 'Country' |t,
+            id: handle ~ '-country',
+            name: handle ~ '[country]',
+            value: country,
+        }) }}
+    </div>
+    <div class="geo-mapper-coords">
+        {{ forms.textField({
+            placeholder: 'Latitude' |t,
+            id: handle ~ '-lat',
+            name: handle ~ '[lat]',
+            value: lat,
+        }) }}
+        {{ forms.textField({
+            placeholder: 'Longitude' |t,
+            id: handle ~ '-lng',
+            name: handle ~ '[lng]',
+            value: lng,
+        }) }}
+    </div>
+</div>
+
+<div class="clear"></div>
