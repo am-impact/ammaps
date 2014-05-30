@@ -1,4 +1,10 @@
 <?php
+/**
+ * Google Maps for Craft CMS
+ *
+ * @package   Am Maps
+ * @author    Hubert Prein
+ */
 namespace Craft;
 
 class AmMapsPlugin extends BasePlugin

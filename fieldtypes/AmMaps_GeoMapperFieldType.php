@@ -11,7 +11,14 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
     public function getInputHtml($name, $value)
     {
         // Load resources
-        craft()->templates->includeCssResource('ammaps/css/fieldtype.css');
+        $js = '
+        new Craft.GeoMapper({
+            handle: "' . $name . '"
+        });';
+        craft()->templates->includeJsFile('//maps.google.com/maps/api/js?v=3&amp;sensor=false');
+        craft()->templates->includeJsResource('ammaps/js/GeoMapper.js');
+        craft()->templates->includeJs($js);
+        craft()->templates->includeCssResource('ammaps/css/GeoMapper.css');
 
         // Set model
         if (!empty($value))
@@ -25,6 +32,20 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
         }
 
         return craft()->templates->render('ammaps/geomapper/input', $locationModel->getAttributes());
+    }
+
+    /**
+     * Modify input value before it's parsed to the template.
+     *
+     * - Will be triggered before Craft will render the template.
+     *
+     * @param mixed $value Value from Craft's elements table, which we will ignore because of our own table.
+     *
+     * @return type
+     */
+    public function prepValue($value)
+    {
+        return craft()->amMaps->getGeoMapperData($this);
     }
 
     /**

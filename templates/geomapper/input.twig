@@ -1,12 +1,13 @@
 {% import "_includes/forms" as forms %}
 
-<div class="geo-mapper-field" id="{{ handle }}">
+<div class="geo-mapper-field {{ handle }}" id="{{ handle }}">
+    <div class="geo-mapper-maps"></div>
     <div class="geo-mapper-address">
         {{ forms.textField({
             placeholder: 'Address' |t,
             id: handle ~ '-address',
             name: handle ~ '[address]',
-            value: address,
+            value: address
         }) }}
     </div>
     <div class="geo-mapper-location">
@@ -14,34 +15,41 @@
             placeholder: 'Zip' |t,
             id: handle ~ '-zip',
             name: handle ~ '[zip]',
-            value: zip,
+            value: zip
         }) }}
         {{ forms.textField({
             placeholder: 'City' |t,
             id: handle ~ '-city',
             name: handle ~ '[city]',
-            value: city,
+            value: city
         }) }}
         {{ forms.textField({
             placeholder: 'Country' |t,
             id: handle ~ '-country',
             name: handle ~ '[country]',
-            value: country,
+            value: country
         }) }}
     </div>
     <div class="geo-mapper-coords">
         {{ forms.textField({
             placeholder: 'Latitude' |t,
             id: handle ~ '-lat',
+            class: 'geo-mapper-ignore',
             name: handle ~ '[lat]',
-            value: lat,
+            value: lat
         }) }}
         {{ forms.textField({
             placeholder: 'Longitude' |t,
             id: handle ~ '-lng',
+            class: 'geo-mapper-ignore',
             name: handle ~ '[lng]',
-            value: lng,
+            value: lng
         }) }}
+        <div class="field">
+            <div class="input">
+                <input type="button" class="btn submit fullwidth geo-mapper-ignore" name="updateCoords" value="{{ "Find coordinates" |t }}">
+            </div>
+        </div>
     </div>
 </div>
 
