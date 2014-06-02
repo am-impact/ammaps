@@ -16,12 +16,12 @@ You can drag the marker around to update the coordinates to pinpoint the locatio
 
 ## How do I display the information on the frontend?
 
-    <p>{{ entry.GeoMapperFieldName.address }}
-    <p>{{ entry.GeoMapperFieldName.zip }}
-    <p>{{ entry.GeoMapperFieldName.city }}
-    <p>{{ entry.GeoMapperFieldName.country }}
-    <p>{{ entry.GeoMapperFieldName.lat }}
-    <p>{{ entry.GeoMapperFieldName.lng }}
+    {{ entry.GeoMapperFieldName.address }}
+    {{ entry.GeoMapperFieldName.zip }}
+    {{ entry.GeoMapperFieldName.city }}
+    {{ entry.GeoMapperFieldName.country }}
+    {{ entry.GeoMapperFieldName.lat }}
+    {{ entry.GeoMapperFieldName.lng }}
 
 ## Contact
 
