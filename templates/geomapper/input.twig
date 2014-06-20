@@ -9,6 +9,11 @@
             name: handle ~ '[address]',
             value: address
         }) }}
+        <div class="field">
+            <div class="input">
+                <input type="button" class="btn submit fullwidth geo-mapper-ignore" name="updateCoords" value="{{ "Find coordinates" |t }}">
+            </div>
+        </div>
     </div>
     <div class="geo-mapper-location">
         {{ forms.textField({
@@ -31,25 +36,18 @@
         }) }}
     </div>
     <div class="geo-mapper-coords">
-        {{ forms.textField({
-            placeholder: 'Latitude' |t,
+        {{ forms.hidden({
             id: handle ~ '-lat',
             class: 'geo-mapper-ignore',
             name: handle ~ '[lat]',
             value: lat
         }) }}
-        {{ forms.textField({
-            placeholder: 'Longitude' |t,
+        {{ forms.hidden({
             id: handle ~ '-lng',
             class: 'geo-mapper-ignore',
             name: handle ~ '[lng]',
             value: lng
         }) }}
-        <div class="field">
-            <div class="input">
-                <input type="button" class="btn submit fullwidth geo-mapper-ignore" name="updateCoords" value="{{ "Find coordinates" |t }}">
-            </div>
-        </div>
     </div>
 </div>
 

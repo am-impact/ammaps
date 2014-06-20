@@ -28,7 +28,7 @@ Craft.GeoMapper = Garnish.Base.extend({
         // Do we have saved data?
         var lat = this.$latField.val(),
             lng = this.$lngField.val();
-        if(this.$addressField.val() != '' && lat != '' && lng != '') {
+        if(lat != '' && lng != '') {
             var location = new google.maps.LatLng(lat, lng);
             this.createMap(this, location);
         }
@@ -42,13 +42,17 @@ Craft.GeoMapper = Garnish.Base.extend({
     getCoords: function(event) {
         // Get the required input values
         var inputs = {},
-            self = this;
+            self = this,
+            doUpdate = false;
         $.each(this.$inputFields, function(i, field) {
             var fieldName = $(field).attr('id').replace('fields-' + self.handle + '-', '');
             inputs[fieldName] = $(field).val();
+            if(inputs[fieldName] != '') {
+                doUpdate = true;
+            }
         });
-        // We only update the map if we have at least an address
-        if(inputs.address) {
+        // We only update if we have at least one set value
+        if(doUpdate) {
             var geoAddress = inputs.address;
             geoAddress += inputs.zip ? ', ' + inputs.zip : '';
             geoAddress += inputs.city ? ', ' + inputs.city : '';
@@ -69,6 +73,7 @@ Craft.GeoMapper = Garnish.Base.extend({
         self.$mapsContainer.fadeIn(400, function() {
             self.googleMaps = new google.maps.Map(self.$mapsContainer[0], {
                 zoom: 1,
+                scrollwheel: false,
                 center: location,
                 streetViewControl: false
             });

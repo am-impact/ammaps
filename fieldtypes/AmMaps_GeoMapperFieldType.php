@@ -19,7 +19,6 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
         craft()->templates->includeJsResource('ammaps/js/GeoMapper.js');
         craft()->templates->includeJs($js);
         craft()->templates->includeCssResource('ammaps/css/GeoMapper.css');
-
         // Set model
         if (!empty($value))
         {
@@ -30,7 +29,6 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
             $locationModel = new AmMaps_LocationModel;
             $locationModel->handle = $name;
         }
-
         return craft()->templates->render('ammaps/geomapper/input', $locationModel->getAttributes());
     }
 

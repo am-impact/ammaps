@@ -43,6 +43,16 @@ class AmMapsService extends BaseApplicationComponent
         {
         	return false; // Attributes don't exist
         }
+        // When a global set stores the attributes in Field Layout, the attributes variable is an object all of sudden
+        if(! is_array($attributes))
+        {
+            $attributes = json_decode($attributes, true);
+        }
+        // Now that we know for sure that the attributes is an array, check if we have anything set at all
+        if(! count($attributes))
+        {
+            return false;
+        }
         // Attempt to load existing record
         $geoMapperRecord = AmMaps_GeoMapperRecord::model()->findByAttributes(array(
             'elementId' => $elementId,
@@ -55,12 +65,22 @@ class AmMapsService extends BaseApplicationComponent
             $attributes['handle']    = $handle;
         }
         // Set default values
+        $clearCoordFields = true;
         foreach($attributes as $key => $value)
         {
+            if($key != 'lat' && $key != 'lng' && ! empty($value))
+            {
+                $clearCoordFields = false;
+            }
             if(! $value)
             {
                 $attributes[$key] = null;
             }
+        }
+        if($clearCoordFields)
+        {
+            $attributes['lat'] = null;
+            $attributes['lng'] = null;
         }
         // Set record values
         $geoMapperRecord->setAttributes($attributes, false);

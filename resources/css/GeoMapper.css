@@ -2,12 +2,20 @@ div.geo-mapper-field .field  {
 	margin: 0;
 }
 
-div.geo-mapper-location {
-	margin-top: 5px;
-}
-div.geo-mapper-location .field {
+div.geo-mapper-address .field, div.geo-mapper-location .field {
 	float: left;
 	margin-bottom: 5px;
+}
+div.geo-mapper-address div.field:nth-child(1) {
+	width: 69%;
+	margin-right: 1%;
+}
+div.geo-mapper-address div.field:nth-child(2) {
+	width: 30%;
+}
+
+div.geo-mapper-location {
+	clear: both;
 }
 div.geo-mapper-location div.field:nth-child(1) {
     width: 20%;
@@ -20,25 +28,6 @@ div.geo-mapper-location div.field:nth-child(2) {
 div.geo-mapper-location div.field:nth-child(3) {
     width: 39%;
     margin-right: 0%;
-}
-
-div.geo-mapper-coords {
-	clear: both;
-}
-div.geo-mapper-coords .field {
-	float: left;
-}
-div.geo-mapper-coords div.field:nth-child(1) {
-	width: 40%;
-	margin-right: 1%;
-}
-div.geo-mapper-coords div.field:nth-child(2) {
-	width: 40%;
-	margin-right: 1%;
-}
-div.geo-mapper-coords div.field:nth-child(3) {
-	width: 18%;
-	text-align: right;
 }
 
 div.geo-mapper-maps {
