@@ -26,3 +26,11 @@ You can drag the marker around to update the coordinates to pinpoint the locatio
 ## Contact
 
 If you have any questions or suggestions, don't hesitate to contact us.
+
+## Changelog
+
+####1.0.1
+-   Fields for the coordinates are now hidden.
+-   The coordinates will be deleted automatically if none of the fields have data.
+-   Google Maps will be shown if any of the fields has at least some data (e.g. : the address field).
+-   Scrolling in Google Maps has been disabled.
