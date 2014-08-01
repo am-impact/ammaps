@@ -3,9 +3,10 @@ namespace Craft;
 
 class AmMaps_GeoMapperRecord extends BaseRecord
 {
+    const TableName = 'ammaps_geomapper';
     public function getTableName()
     {
-        return 'ammaps_geomapper';
+        return static::TableName;
     }
 
     protected function defineAttributes()

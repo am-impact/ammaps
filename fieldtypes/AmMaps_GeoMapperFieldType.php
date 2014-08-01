@@ -8,6 +8,13 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
         return 'Geo Mapper';
     }
 
+    public function modifyElementsQuery(DbCommand $query, $params)
+    {
+        if ($params !== null) {
+            craft()->amMaps->modifyElementsQuery($query, $params);
+        }
+    }
+
     public function getInputHtml($name, $value)
     {
         // Load resources

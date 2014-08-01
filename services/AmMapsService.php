@@ -3,6 +3,34 @@ namespace Craft;
 
 class AmMapsService extends BaseApplicationComponent
 {
+    /****
+    * Modify the elements query.
+    *
+    */
+    public function modifyElementsQuery(DbCommand $query, $params = array())
+    {
+        // Join with plugin table
+        $query->join(AmMaps_GeoMapperRecord::TableName, 'elements.id='.craft()->db->tablePrefix.AmMaps_GeoMapperRecord::TableName.'.elementId');
+        //prepare where statement
+        $this->_searchParams($query, $params);
+    }
+
+    /**
+    * Create a where statement for the given parameters and add it to the query.
+    * @param DbCommand $query 
+    * @param array $params Params to apply to the query.
+    */
+    private function _searchParams(&$query, $params)
+    {
+        if(count($params )> 0)
+        {
+            foreach($params as $key=>$value)
+            {
+                $query->andWhere(craft()->db->tablePrefix.AmMaps_GeoMapperRecord::TableName.'.`'.$key.'` '.$value);
+            }            
+        }
+    }
+
     /**
      * Get Geo Mapper field data.
      *
