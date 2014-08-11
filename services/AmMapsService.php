@@ -17,19 +17,24 @@ class AmMapsService extends BaseApplicationComponent
 
     /**
     * Create a where statement for the given parameters and add it to the query.
-    * @param DbCommand $query 
+    * @param DbCommand $query
     * @param array $params Params to apply to the query.
     */
     private function _searchParams(&$query, $params)
     {
-        if(count($params )> 0)
+        if ($params!== null && is_array($params))
         {
-            foreach($params as $key=>$value)
+            $tableName = craft()->db->tablePrefix.AmMaps_GeoMapperRecord::TableName;
+            if(count($params )> 0)
             {
-                $query->andWhere(craft()->db->tablePrefix.AmMaps_GeoMapperRecord::TableName.'.`'.$key.'` '.$value);
-            }            
+                foreach($params as $key=>$value)
+                {
+                    $query->andWhere(DbHelper::parseParam($tableName.'.'.$key, $params, $query->params));
+                }
+            }
         }
     }
+
 
     /**
      * Get Geo Mapper field data.
