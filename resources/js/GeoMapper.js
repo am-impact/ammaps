@@ -12,6 +12,7 @@ Craft.GeoMapper = Garnish.Base.extend({
     googleMaps: null,
     googleMarker: null,
     googleGeo: new google.maps.Geocoder,
+    skipFirstUpdate: false,
 
 	init: function(params) {
         // Set variables
@@ -30,6 +31,8 @@ Craft.GeoMapper = Garnish.Base.extend({
             lng = this.$lngField.val();
         if(lat != '' && lng != '') {
             var location = new google.maps.LatLng(lat, lng);
+
+            this.skipFirstUpdate = true;
             this.createMap(this, location);
         }
 	},
@@ -129,13 +132,19 @@ Craft.GeoMapper = Garnish.Base.extend({
      * @param bool   eventUpdate Which type triggered the function.
      */
     updateCoordFields: function(self, location, eventUpdate) {
-        if(eventUpdate) {
-            self.$latField.val(location.latLng.lat());
-            self.$lngField.val(location.latLng.lng());
+        // If we have data available, don't update the fields in order to prevent Craft's "Any changes will be lost if you leave this page." message.
+        if (! self.skipFirstUpdate) {
+            if(eventUpdate) {
+                self.$latField.val(location.latLng.lat());
+                self.$lngField.val(location.latLng.lng());
+            }
+            else {
+                self.$latField.val(location.lat());
+                self.$lngField.val(location.lng());
+            }
         }
         else {
-            self.$latField.val(location.lat());
-            self.$lngField.val(location.lng());
+            self.skipFirstUpdate = false;
         }
     },
 

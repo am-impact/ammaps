@@ -11,7 +11,7 @@ class AmMapsPlugin extends BasePlugin
 {
     public function getName()
     {
-         return 'a&m impact maps';
+         return 'a&m maps';
     }
 
     public function getVersion()
