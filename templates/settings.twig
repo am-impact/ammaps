@@ -1,0 +1,8 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.lightswitchField({
+    id: 'seperatedAddress',
+    name: 'seperatedAddress',
+    label: 'Address should be seperated with a street and housenumber field'|t,
+    on: settings.seperatedAddress,
+}) }}

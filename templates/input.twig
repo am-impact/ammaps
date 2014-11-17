@@ -1,0 +1,69 @@
+{% import "_includes/forms" as forms %}
+
+<div class="geo-mapper-field {{ field.handle }}" id="{{ field.handle }}">
+    <div class="geo-mapper-maps"></div>
+    <div class="geo-mapper-address{% if settings.seperatedAddress %}-seperated{% endif %}">
+        {% if settings.seperatedAddress %}
+            {{ forms.textField({
+                placeholder: 'Street' |t,
+                id: field.handle ~ '-street',
+                name: field.handle ~ '[street]',
+                value: field.street
+            }) }}
+            {{ forms.textField({
+                placeholder: 'Housenumber' |t,
+                id: field.handle ~ '-housenumber',
+                name: field.handle ~ '[housenumber]',
+                value: field.housenumber
+            }) }}
+        {% else %}
+            {{ forms.textField({
+                placeholder: 'Address' |t,
+                id: field.handle ~ '-address',
+                name: field.handle ~ '[address]',
+                value: field.address
+            }) }}
+        {% endif %}
+        <div class="field">
+            <div class="input">
+                <input type="button" class="btn submit fullwidth geo-mapper-ignore" name="updateCoords" value="{{ "Find coordinates" |t }}">
+            </div>
+        </div>
+    </div>
+    <div class="geo-mapper-location">
+        {{ forms.textField({
+            placeholder: 'Zip' |t,
+            id: field.handle ~ '-zip',
+            name: field.handle ~ '[zip]',
+            value: field.zip
+        }) }}
+        {{ forms.textField({
+            placeholder: 'City' |t,
+            id: field.handle ~ '-city',
+            name: field.handle ~ '[city]',
+            value: field.city
+        }) }}
+        {{ forms.textField({
+            placeholder: 'Country' |t,
+            id: field.handle ~ '-country',
+            name: field.handle ~ '[country]',
+            value: field.country
+        }) }}
+    </div>
+    <div class="geo-mapper-coords">
+        {{ forms.hidden({
+            id: field.handle ~ '-lat',
+            class: 'geo-mapper-ignore',
+            name: field.handle ~ '[lat]',
+            value: field.lat
+        }) }}
+        {{ forms.hidden({
+            id: field.handle ~ '-lng',
+            class: 'geo-mapper-ignore',
+            name: field.handle ~ '[lng]',
+            value: field.lng
+        }) }}
+    </div>
+</div>
+
+<div class="clear"></div>

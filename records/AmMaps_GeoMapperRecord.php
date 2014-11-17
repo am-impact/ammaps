@@ -18,13 +18,15 @@ class AmMaps_GeoMapperRecord extends BaseRecord
             'decimals' => 8
         );
         return array(
-            'handle'    => AttributeType::String,
-            'address'   => AttributeType::String,
-            'zip'       => AttributeType::String,
-            'city'      => AttributeType::String,
-            'country'   => AttributeType::String,
-            'lat'       => $coordsColumn,
-            'lng'       => $coordsColumn
+            'handle'      => AttributeType::String,
+            'address'     => AttributeType::String,
+            'street'      => AttributeType::String,
+            'housenumber' => AttributeType::String,
+            'zip'         => AttributeType::String,
+            'city'        => AttributeType::String,
+            'country'     => AttributeType::String,
+            'lat'         => $coordsColumn,
+            'lng'         => $coordsColumn
         );
     }
 

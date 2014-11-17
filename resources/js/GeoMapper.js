@@ -5,7 +5,6 @@ Craft.GeoMapper = Garnish.Base.extend({
     $container: null,
     $mapsContainer: null,
     $inputFields: null,
-    $addressField: null,
     $buttonField: null,
     $latField: null,
     $lngField: null,
@@ -13,19 +12,22 @@ Craft.GeoMapper = Garnish.Base.extend({
     googleMarker: null,
     googleGeo: new google.maps.Geocoder,
     skipFirstUpdate: false,
+    seperatedAddress: false,
 
 	init: function(params) {
         // Set variables
         this.handle = params.handle;
+        this.seperatedAddress = params.seperatedAddress;
 		this.$container = $('.geo-mapper-field.' + this.handle);
         this.$mapsContainer = $('.geo-mapper-maps', this.$container);
         this.$inputFields = this.$container.find('input:not(.geo-mapper-ignore)');
-        this.$addressField = this.$container.find('input[name*="address"]');
         this.$buttonField = this.$container.find('input[name*="updateCoords"]');
         this.$latField = this.$container.find('input[name*="lat"]');
         this.$lngField = this.$container.find('input[name*="lng"]');
+
         // Add listener
         this.addListener(this.$buttonField, 'click', 'getCoords');
+
         // Do we have saved data?
         var lat = this.$latField.val(),
             lng = this.$lngField.val();
@@ -56,7 +58,7 @@ Craft.GeoMapper = Garnish.Base.extend({
         });
         // We only update if we have at least one set value
         if(doUpdate) {
-            var geoAddress = inputs.address;
+            var geoAddress = self.seperatedAddress ? inputs.street + ' ' + inputs.housenumber : inputs.address;
             geoAddress += inputs.zip ? ', ' + inputs.zip : '';
             geoAddress += inputs.city ? ', ' + inputs.city : '';
             geoAddress += inputs.country ? ', ' + inputs.country : '';

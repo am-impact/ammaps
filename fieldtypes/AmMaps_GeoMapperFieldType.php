@@ -15,17 +15,28 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
         }
     }
 
+    public function getSettingsHtml()
+    {
+        return craft()->templates->render('ammaps/settings', array(
+            'settings' => $this->getSettings()
+        ));
+    }
+
     public function getInputHtml($name, $value)
     {
+        $settings = $this->getSettings();
+
         // Load resources
         $js = '
         new Craft.GeoMapper({
-            handle: "' . $name . '"
+            handle: "' . $name . '",
+            seperatedAddress: ' . ($settings->seperatedAddress ? 'true' : 'false') . '
         });';
         craft()->templates->includeJsFile('//maps.google.com/maps/api/js?v=3&amp;sensor=false');
         craft()->templates->includeJsResource('ammaps/js/GeoMapper.js');
         craft()->templates->includeJs($js);
         craft()->templates->includeCssResource('ammaps/css/GeoMapper.css');
+
         // Set model
         if (!empty($value))
         {
@@ -36,7 +47,13 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
             $locationModel = new AmMaps_LocationModel;
             $locationModel->handle = $name;
         }
-        return craft()->templates->render('ammaps/geomapper/input', $locationModel->getAttributes());
+
+        // Render template
+        $variables = array(
+            'field'    => $locationModel->getAttributes(),
+            'settings' => $settings
+        );
+        return craft()->templates->render('ammaps/input', $variables);
     }
 
     /**
@@ -63,5 +80,17 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
     public function onAfterElementSave()
     {
         return craft()->amMaps->saveGeoMapperField($this);
+    }
+
+    /**
+     * Fieldtype settings.
+     *
+     * @return array
+     */
+    protected function defineSettings()
+    {
+        return array(
+            'seperatedAddress' => array(AttributeType::Bool, 'default' => false)
+        );
     }
 }
