@@ -4,6 +4,7 @@ Craft.GeoMapper = Garnish.Base.extend({
     handle: null,
     $container: null,
     $mapsContainer: null,
+    $fieldTab: null,
     $inputFields: null,
     $buttonField: null,
     $latField: null,
@@ -11,15 +12,17 @@ Craft.GeoMapper = Garnish.Base.extend({
     googleMaps: null,
     googleMarker: null,
     googleGeo: new google.maps.Geocoder,
+    createdMap: false,
     skipFirstUpdate: false,
     seperatedAddress: false,
 
-	init: function(params) {
+    init: function(params) {
         // Set variables
         this.handle = params.handle;
         this.seperatedAddress = params.seperatedAddress;
-		this.$container = $('.geo-mapper-field.' + this.handle);
+        this.$container = $('.geo-mapper-field.' + this.handle);
         this.$mapsContainer = $('.geo-mapper-maps', this.$container);
+        this.$fieldTab = this.$container.closest('.field').parent();
         this.$inputFields = this.$container.find('input:not(.geo-mapper-ignore)');
         this.$buttonField = this.$container.find('input[name*="updateCoords"]');
         this.$latField = this.$container.find('input[name*="lat"]');
@@ -27,7 +30,18 @@ Craft.GeoMapper = Garnish.Base.extend({
 
         // Add listener
         this.addListener(this.$buttonField, 'click', 'getCoords');
+        this.addListener($('.tabs .tab'), 'click', 'switchElementTab');
 
+        // Init saved coords if the field is on the first tab
+        if (this.$fieldTab.attr('id') == 'tab1') {
+            this.initSavedCoords();
+        }
+    },
+
+    /**
+     * Initialize Google Maps based on saved coordinates.
+     */
+    initSavedCoords: function() {
         // Do we have saved data?
         var lat = this.$latField.val(),
             lng = this.$lngField.val();
@@ -37,7 +51,7 @@ Craft.GeoMapper = Garnish.Base.extend({
             this.skipFirstUpdate = true;
             this.createMap(this, location);
         }
-	},
+    },
 
     /**
      * Get coordinates based on values from input fields.
@@ -65,7 +79,7 @@ Craft.GeoMapper = Garnish.Base.extend({
             this.getGeoLocation(geoAddress, this.updateMap);
         }
         event.preventDefault();
-	},
+    },
 
     /**
      * Display and create a Google Maps object.
@@ -75,15 +89,20 @@ Craft.GeoMapper = Garnish.Base.extend({
      */
     createMap: function(self, location)
     {
-        self.$mapsContainer.fadeIn(400, function() {
-            self.googleMaps = new google.maps.Map(self.$mapsContainer[0], {
-                zoom: 1,
-                scrollwheel: false,
-                center: location,
-                streetViewControl: false
+        if (! this.createdMap) {
+            this.createdMap = true;
+
+            self.$mapsContainer.removeClass('hidden');
+            self.$mapsContainer.fadeIn(400, function() {
+                self.googleMaps = new google.maps.Map(self.$mapsContainer[0], {
+                    zoom: 1,
+                    scrollwheel: false,
+                    center: location,
+                    streetViewControl: false
+                });
+                self.updateMap(self, location);
             });
-            self.updateMap(self, location);
-        });
+        }
     },
 
     /**
@@ -94,7 +113,7 @@ Craft.GeoMapper = Garnish.Base.extend({
      */
     updateMap: function(self, location) {
         // Handle visibility
-        if(! self.$mapsContainer.is(':visible'))
+        if(self.$mapsContainer.hasClass('hidden'))
         {
             // We will end this function and update after google maps is visible and loaded
             self.createMap(self, location);
@@ -165,6 +184,22 @@ Craft.GeoMapper = Garnish.Base.extend({
                 callback(self, location);
             }
         });
+    },
+
+    /**
+     * Triggers when you select another tab when creating / editing an Element.
+     *
+     * @param object event Triggered event.
+     */
+    switchElementTab: function(event) {
+        if (! this.createdMap) {
+            var tabId = $(event.currentTarget).attr('href').replace('#', ''),
+                $tab = $('#' + tabId);
+
+            if ($tab.attr('id') == this.$fieldTab.attr('id')) {
+                this.initSavedCoords();
+            }
+        }
     }
 });
 

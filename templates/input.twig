@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 
 <div class="geo-mapper-field {{ field.handle }}" id="{{ field.handle }}">
-    <div class="geo-mapper-maps"></div>
+    <div class="geo-mapper-maps hidden"></div>
     <div class="geo-mapper-address{% if settings.seperatedAddress %}-seperated{% endif %}">
         {% if settings.seperatedAddress %}
             {{ forms.textField({
