@@ -1,0 +1,14 @@
+{
+    "name": "am-impact/ammaps",
+    "description": "Google Maps fieldtype for Craft",
+    "authors": [
+        {
+            "name": "Hubert Prein",
+            "email": "h.prein@am-impact.nl"
+        }
+    ],
+    "type": "craft-plugin",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
