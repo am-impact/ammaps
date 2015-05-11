@@ -32,8 +32,8 @@ Craft.GeoMapper = Garnish.Base.extend({
         this.addListener(this.$buttonField, 'click', 'getCoords');
         this.addListener($('.tabs .tab'), 'click', 'switchElementTab');
 
-        // Init saved coords if the field is on the first tab
-        if (this.$fieldTab.attr('id') == 'tab1') {
+        // Init saved coords if the field is on the first tab or in globals (no tabs)
+        if (this.$fieldTab.attr('id') == 'tab1' || this.$fieldTab.attr('id') == undefined) {
             this.initSavedCoords();
         }
     },

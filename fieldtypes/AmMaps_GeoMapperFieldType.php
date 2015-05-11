@@ -33,7 +33,7 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
             seperatedAddress: ' . ($settings->seperatedAddress ? 'true' : 'false') . '
         });';
         craft()->templates->includeJsFile('//maps.google.com/maps/api/js?v=3&amp;sensor=false');
-        craft()->templates->includeJsResource('ammaps/js/GeoMapper.js');
+        craft()->templates->includeJsResource('ammaps/js/GeoMapper.min.js');
         craft()->templates->includeJs($js);
         craft()->templates->includeCssResource('ammaps/css/GeoMapper.css');
 
