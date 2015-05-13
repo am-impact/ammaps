@@ -4,6 +4,7 @@ namespace Craft;
 class AmMaps_GeoMapperRecord extends BaseRecord
 {
     const TableName = 'ammaps_geomapper';
+
     public function getTableName()
     {
         return static::TableName;
@@ -26,7 +27,8 @@ class AmMaps_GeoMapperRecord extends BaseRecord
             'city'        => AttributeType::String,
             'country'     => AttributeType::String,
             'lat'         => $coordsColumn,
-            'lng'         => $coordsColumn
+            'lng'         => $coordsColumn,
+            'locale'      => array(AttributeType::Locale, 'default' => null)
         );
     }
 
@@ -34,6 +36,13 @@ class AmMaps_GeoMapperRecord extends BaseRecord
     {
         return array(
             'element' => array(static::BELONGS_TO, 'ElementRecord', 'required' => true, 'onDelete' => static::CASCADE)
+        );
+    }
+
+    public function defineIndexes()
+    {
+        return array(
+            array('columns' => array('elementId', 'handle', 'locale'), 'unique' => false)
         );
     }
 }

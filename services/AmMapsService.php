@@ -27,7 +27,8 @@ class AmMapsService extends BaseApplicationComponent
     {
         $geoMapperRecord = AmMaps_GeoMapperRecord::model()->findByAttributes(array(
             'elementId' => $fieldType->element->id,
-            'handle'    => $fieldType->model->handle
+            'handle'    => $fieldType->model->handle,
+            'locale'    => $fieldType->element->locale
         ));
         // Get attributes
         $attributes = array();
@@ -46,9 +47,10 @@ class AmMapsService extends BaseApplicationComponent
 	 */
 	public function saveGeoMapperField(BaseFieldType $fieldType)
 	{
-		// Get handle, elementId, and content
+		// Get handle, elementId, locale and content
         $handle    = $fieldType->model->handle;
         $elementId = $fieldType->element->id;
+        $locale    = $fieldType->element->locale;
         $content   = $fieldType->element->getContent();
         // Set specified attributes
         if (($attributes = $content->getAttribute($handle)) === false) {
@@ -65,13 +67,15 @@ class AmMapsService extends BaseApplicationComponent
         // Attempt to load existing record
         $geoMapperRecord = AmMaps_GeoMapperRecord::model()->findByAttributes(array(
             'elementId' => $elementId,
-            'handle'    => $handle
+            'handle'    => $handle,
+            'locale'    => $locale
         ));
         // If no record exists, create new record
         if (! $geoMapperRecord) {
             $geoMapperRecord = new AmMaps_GeoMapperRecord;
             $attributes['elementId'] = $elementId;
             $attributes['handle']    = $handle;
+            $attributes['locale']    = $locale;
         }
         // Set default values
         $clearCoordFields = true;

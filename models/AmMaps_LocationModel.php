@@ -5,7 +5,6 @@ class AmMaps_LocationModel extends BaseModel
 {
     protected function defineAttributes()
     {
-
         $coordsColumn = array(
             AttributeType::Number,
             'column'   => ColumnType::Decimal,
@@ -23,7 +22,8 @@ class AmMaps_LocationModel extends BaseModel
             'city'        => AttributeType::String,
             'country'     => AttributeType::String,
             'lat'         => $coordsColumn,
-            'lng'         => $coordsColumn
+            'lng'         => $coordsColumn,
+            'locale'      => AttributeType::Locale
         );
     }
 }
