@@ -30,10 +30,20 @@ class AmMapsService extends BaseApplicationComponent
             'handle'    => $fieldType->model->handle,
             'locale'    => $fieldType->element->locale
         ));
-        // Get attributes
+        // Get attributes for current locale
         $attributes = array();
         if ($geoMapperRecord) {
             $attributes = $geoMapperRecord->getAttributes();
+        }
+        else {
+            // Find record for any locale
+            $geoMapperRecord = AmMaps_GeoMapperRecord::model()->findByAttributes(array(
+                'elementId' => $fieldType->element->id,
+                'handle'    => $fieldType->model->handle
+            ));
+            if ($geoMapperRecord) {
+                $attributes = $geoMapperRecord->getAttributes();
+            }
         }
         return $attributes;
     }
