@@ -64,7 +64,7 @@ Craft.GeoMapper = Garnish.Base.extend({
             self = this,
             doUpdate = false;
         $.each(this.$inputFields, function(i, field) {
-            var fieldName = $(field).attr('id').replace('fields-' + self.handle + '-', '');
+            var fieldName = $(field).attr('id').substring($(field).attr('id').lastIndexOf("-")).substring(1);
             inputs[fieldName] = $(field).val();
             if(inputs[fieldName] != '') {
                 doUpdate = true;
