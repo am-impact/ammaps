@@ -20,7 +20,7 @@ Craft.GeoMapper = Garnish.Base.extend({
         // Set variables
         this.handle = params.handle;
         this.seperatedAddress = params.seperatedAddress;
-        this.$container = $('.geo-mapper-field.' + this.handle);
+        this.$container = $('#' + this.handle);
         this.$mapsContainer = $('.geo-mapper-maps', this.$container);
         this.$fieldTab = this.$container.closest('.field').parent();
         this.$inputFields = this.$container.find('input:not(.geo-mapper-ignore)');
