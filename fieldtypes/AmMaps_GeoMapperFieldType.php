@@ -24,12 +24,18 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
 
     public function getInputHtml($name, $value)
     {
+        // Reformat the input name into something that looks more like an ID
+        $id = craft()->templates->formatInputId($name);
+
+        // Figure out what that ID is going to look like once it has been namespaced
+        $namespacedId = craft()->templates->namespaceInputId($id);
+
         $settings = $this->getSettings();
 
         // Load resources
         $js = '
         new Craft.GeoMapper({
-            handle: "' . $name . '",
+            handle: "' . $namespacedId . '",
             seperatedAddress: ' . ($settings->seperatedAddress ? 'true' : 'false') . '
         });';
         craft()->templates->includeJsFile('//maps.google.com/maps/api/js?v=3&amp;sensor=false');
