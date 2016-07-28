@@ -1,8 +1,10 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.lightswitchField({
-    id: 'seperatedAddress',
-    name: 'seperatedAddress',
-    label: 'Address should be seperated with a street and housenumber field'|t,
-    on: settings.seperatedAddress,
+{{ forms.textField({
+    label: 'API key'|t,
+    id: 'apiKey',
+    name: 'apiKey',
+    value: settings.apiKey,
+    first: true,
+    instructions: 'https://developers.google.com/maps/documentation/javascript/get-api-key'
 }) }}

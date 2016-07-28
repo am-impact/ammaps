@@ -16,7 +16,7 @@ class AmMapsPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '1.1.2';
+        return '1.1.3';
     }
 
     public function getDeveloper()
@@ -27,5 +27,19 @@ class AmMapsPlugin extends BasePlugin
     public function getDeveloperUrl()
     {
         return 'http://www.am-impact.nl';
+    }
+
+    public function getSettingsHtml()
+    {
+        return craft()->templates->render('ammaps/settings', array(
+            'settings' => $this->getSettings()
+        ));
+    }
+
+    protected function defineSettings()
+    {
+        return array(
+            'apiKey' => array(AttributeType::String, 'default' => ''),
+        );
     }
 }
