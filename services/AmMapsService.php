@@ -48,31 +48,34 @@ class AmMapsService extends BaseApplicationComponent
         return $attributes;
     }
 
-	/**
-	 * Save Geo Maper field to the database.
-	 *
-	 * @param BaseFieldType $fieldType
-	 *
-	 * @return bool
-	 */
-	public function saveGeoMapperField(BaseFieldType $fieldType)
-	{
-		// Get handle, elementId, locale and content
+    /**
+     * Save Geo Maper field to the database.
+     *
+     * @param BaseFieldType $fieldType
+     * @param array         $attributes
+     *
+     * @return bool
+     */
+    public function saveGeoMapperField(BaseFieldType $fieldType, $attributes = array())
+    {
+        // Get handle, elementId, locale and content
         $handle    = $fieldType->model->handle;
         $elementId = $fieldType->element->id;
         $locale    = $fieldType->element->locale;
         $content   = $fieldType->element->getContent();
-        // Set specified attributes
-        if (($attributes = $content->getAttribute($handle)) === false) {
-        	return false; // Attributes don't exist
-        }
-        // When a global set stores the attributes in Field Layout, the attributes variable is an object all of sudden
-        if (! is_array($attributes)) {
-            $attributes = json_decode($attributes, true);
-        }
-        // Now that we know for sure that the attributes is an array, check if we have anything set at all
         if (! count($attributes)) {
-            return false;
+            // Set specified attributes
+            if (($attributes = $content->getAttribute($handle)) === false) {
+                return false; // Attributes don't exist
+            }
+            // When a global set stores the attributes in Field Layout, the attributes variable is an object all of sudden
+            if (! is_array($attributes)) {
+                $attributes = json_decode($attributes, true);
+            }
+            // Now that we know for sure that the attributes is an array, check if we have anything set at all
+            if (! count($attributes)) {
+                return false;
+            }
         }
         // Attempt to load existing record
         $geoMapperRecord = AmMaps_GeoMapperRecord::model()->findByAttributes(array(
@@ -105,7 +108,7 @@ class AmMapsService extends BaseApplicationComponent
         $geoMapperRecord->setAttributes($attributes, false);
         // Save in database
         return $geoMapperRecord->save();
-	}
+    }
 
     /**
      * Create a where statement for the given parameters and add it to the query.

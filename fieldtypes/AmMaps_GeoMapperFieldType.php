@@ -82,6 +82,22 @@ class AmMaps_GeoMapperFieldType extends BaseFieldType
     /**
      * Save Geo Mapper field in the database through service.
      *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function prepValueFromPost($value)
+    {
+        if ($this->element->id) {
+            return craft()->amMaps->saveGeoMapperField($this, $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Save Geo Mapper field in the database through service.
+     *
      * - Will be triggered after Craft has stored the field information in it's own table.
      *
      * @return type
