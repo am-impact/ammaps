@@ -77,6 +77,9 @@ class AmMapsService extends BaseApplicationComponent
                 return false;
             }
         }
+        if (! is_array($attributes) && is_string($attributes)) {
+            $attributes = json_decode($attributes, true);
+        }
         // Attempt to load existing record
         $geoMapperRecord = AmMaps_GeoMapperRecord::model()->findByAttributes(array(
             'elementId' => $elementId,
@@ -91,18 +94,20 @@ class AmMapsService extends BaseApplicationComponent
             $attributes['locale']    = $locale;
         }
         // Set default values
-        $clearCoordFields = true;
-        foreach($attributes as $key => $value) {
-            if ($key != 'lat' && $key != 'lng' && ! empty($value)) {
-                $clearCoordFields = false;
+        if (is_array($attributes)) {
+            $clearCoordFields = true;
+            foreach($attributes as $key => $value) {
+                if ($key != 'lat' && $key != 'lng' && ! empty($value)) {
+                    $clearCoordFields = false;
+                }
+                if (! $value) {
+                    $attributes[$key] = null;
+                }
             }
-            if (! $value) {
-                $attributes[$key] = null;
+            if ($clearCoordFields) {
+                $attributes['lat'] = null;
+                $attributes['lng'] = null;
             }
-        }
-        if ($clearCoordFields) {
-            $attributes['lat'] = null;
-            $attributes['lng'] = null;
         }
         // Set record values
         $geoMapperRecord->setAttributes($attributes, false);
