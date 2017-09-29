@@ -6,7 +6,6 @@ Craft.GeoMapper = Garnish.Base.extend({
     $mapsContainer: null,
     $fieldTab: null,
     $inputFields: null,
-    $buttonField: null,
     $latField: null,
     $lngField: null,
     googleMaps: null,
@@ -24,12 +23,11 @@ Craft.GeoMapper = Garnish.Base.extend({
         this.$mapsContainer = $('.geo-mapper-maps', this.$container);
         this.$fieldTab = this.$container.closest('.field').parent();
         this.$inputFields = this.$container.find('input:not(.geo-mapper-ignore)');
-        this.$buttonField = this.$container.find('input[name*="updateCoords"]');
         this.$latField = this.$container.find('input[name*="lat"]');
         this.$lngField = this.$container.find('input[name*="lng"]');
 
         // Add listener
-        this.addListener(this.$buttonField, 'click', 'getCoords');
+        this.addListener(this.$inputFields, 'blur', 'getCoords');
         this.addListener($('.tabs .tab'), 'click', 'switchElementTab');
 
         // Init saved coords if the field is on the first tab or in globals (no tabs)

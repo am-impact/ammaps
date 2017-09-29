@@ -2,28 +2,20 @@ div.geo-mapper-field .field  {
 	margin: 0;
 }
 
-div.geo-mapper-address .field, div.geo-mapper-address-seperated .field, div.geo-mapper-location .field {
+div.geo-mapper-address {
+    margin-bottom: 5px;
+}
+
+div.geo-mapper-address-seperated .field, div.geo-mapper-location .field {
 	float: left;
 	margin-bottom: 5px;
 }
 
-div.geo-mapper-address div.field:nth-child(1) {
-	width: 69%;
-	margin-right: 1%;
-}
-div.geo-mapper-address div.field:nth-child(2) {
-	width: 30%;
-}
-
 div.geo-mapper-address-seperated div.field:nth-child(1) {
-    width: 39%;
+    width: 69%;
     margin-right: 1%;
 }
 div.geo-mapper-address-seperated div.field:nth-child(2) {
-    width: 29%;
-    margin-right: 1%;
-}
-div.geo-mapper-address-seperated div.field:nth-child(3) {
     width: 30%;
 }
 
