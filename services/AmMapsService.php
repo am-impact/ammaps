@@ -63,7 +63,7 @@ class AmMapsService extends BaseApplicationComponent
         $elementId = $fieldType->element->id;
         $locale    = $fieldType->element->locale;
         $content   = $fieldType->element->getContent();
-        if (! count($attributes)) {
+        if (!is_array($attributes) || !count($attributes)) {
             // Set specified attributes
             if (($attributes = $content->getAttribute($handle)) === false) {
                 return false; // Attributes don't exist
@@ -73,7 +73,7 @@ class AmMapsService extends BaseApplicationComponent
                 $attributes = json_decode($attributes, true);
             }
             // Now that we know for sure that the attributes is an array, check if we have anything set at all
-            if (! count($attributes)) {
+            if (!is_array($attributes) || !count($attributes)) {
                 return false;
             }
         }
